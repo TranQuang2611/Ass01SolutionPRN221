@@ -1,0 +1,37 @@
+create database SaleDB
+
+create table Member(
+MemberId int primary key,
+Email varchar(100) not null,
+CompanyName varchar(40) not null,
+City varchar(15) not null,
+Country varchar(15) not null,
+[Password] varchar(30) not null
+)
+
+create table [Order](
+OrderId int primary key,
+MemberId int foreign key references Member(MemberId),
+OrderDate datetime not null,
+RequiredDate datetime null,
+ShippedDate datetime null,
+Freight money null
+)
+
+create table Product(
+ProductId int primary key,
+CategoryId int not null,
+ProductName varchar(40) not null,
+[Weight] varchar(20) not null,
+UnitPrice money not null,
+UnitsInStock int not null
+)
+
+create table OrderDetail(
+OrderId int references [Order](OrderId),
+ProductId int references Product(ProductId),
+primary key(OrderId, ProductId),
+UnitPrice money not null,
+Quantity int not null,
+Discount float not null
+)

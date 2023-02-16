@@ -7,19 +7,22 @@ using System.Threading.Tasks;
 
 namespace BusinessObject
 {
-    public class OrderRepository : IOrderDetailRepository
+    public class OrderRepository : IOrderRepository
     {
-        private SaleDbContext context;
-
-        public OrderRepository(SaleDbContext context)
+        public List<Order> ListOrderByMemberId(int memberId)
         {
-            this.context = context;
+            using (var context = new SaleDbContext())
+            {
+                return context.Orders.Where(x => x.MemberId == memberId).ToList();
+            }
         }
 
-        // laasy kieu SQL
-        public List<Product> GetListOderDetail()
+        public List<Order> ListOrderByMemberName(string memberName)
         {
-            return this.context.Products.ToList();
+            using (var context = new SaleDbContext())
+            {
+                return context.Orders.Where(x => x.Member.Email.Contains(memberName)).ToList();
+            }
         }
     }
 }

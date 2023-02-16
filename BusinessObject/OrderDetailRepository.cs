@@ -17,5 +17,13 @@ namespace BusinessObject
                 return context.Products.ToList();
             }
         }
+
+        public List<OrderDetail> GetListOrderDetailByOrderId(int orderId)
+        {
+            using (var context = new SaleDbContext())
+            {
+                return context.OrderDetails.Where(x => x.OrderId == orderId).ToList();
+            }
+        }
     }
 }

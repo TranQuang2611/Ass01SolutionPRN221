@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BusinessObject
 {
-    public interface IOrderDetailRepository
+    public interface IOrderRepository
     {
-        List<OrderDetail> GetListOrderDetailByOrderId(int orderId);
-        List<Product> GetListOderDetail();
+        List<Order> ListOrderByMemberId(int memberId);
+        List<Order> ListOrderByMemberName(string memberName);
     }
 }

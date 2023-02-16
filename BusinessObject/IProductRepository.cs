@@ -9,6 +9,11 @@ namespace BusinessObject
 {
     public interface IProductRepository
     {
+        List<Product> GetAllProduct();
         Product GetProduct(int id);
+
+        List<Product> SearchProduct(Product prod);
+
+        void InsertProduct(Product prod);
     }
 }

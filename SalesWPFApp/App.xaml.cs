@@ -27,8 +27,11 @@ namespace SalesWPFApp
 
         private void ConfigureServices(ServiceCollection services)
         {
-            services.AddSingleton<MainWindow>();
-            services.AddScoped<IOrderDetailRepository, OrderRepository>();
+            services.AddSingleton(typeof(IOrderDetailRepository), typeof(OrderDetailRepository));
+            services.AddSingleton(typeof(IMemberRepository), typeof(MemberRepository));
+            services.AddSingleton(typeof(IOrderRepository), typeof(OrderRepository));
+            services.AddSingleton(typeof(IProductRepository), typeof(ProductRepository));
+            services.AddSingleton<MainWindow>();          
         }
 
         private void OnStartup(object sender, StartupEventArgs e)
