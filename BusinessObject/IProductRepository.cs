@@ -11,9 +11,8 @@ namespace BusinessObject
     {
         List<Product> GetAllProduct();
         Product GetProduct(int id);
-
         List<Product> SearchProduct(Product prod);
-
         void InsertProduct(Product prod);
+        int GetLastIdOfProduct();
     }
 }

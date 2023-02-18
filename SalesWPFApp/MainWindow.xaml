@@ -7,12 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800" Loaded="Window_Loaded">
     <Grid Margin="0,0,0,4" RenderTransformOrigin="0.514,0.45">
-        <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" Margin="83,65,83,361" Name="dataView"/>
+        <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" Margin="83,65,83,361" Name="dataView" SelectedCellsChanged="dataView_SelectedCellsChanged"/>
         <Button x:Name="AddButton" Content="Add" HorizontalAlignment="Left" Margin="38,461,0,0" VerticalAlignment="Top" Width="105" Height="38" Click="AddButton_Click"/>
         <Label Content="Danh sách sản phẩm" HorizontalAlignment="Center" Margin="0,23,0,0" VerticalAlignment="Top" Width="410" Background="#FFE25A5A" FontSize="20" HorizontalContentAlignment="Center"/>
         <Button x:Name="DeleteButton" Content="Delete" HorizontalAlignment="Left" Margin="189,461,0,0" VerticalAlignment="Top" Width="105" Height="38" Click="DeleteButton_Click"/>
         <Button x:Name="SearchButton" Content="Search" HorizontalAlignment="Center" Margin="0,461,0,0" VerticalAlignment="Top" Width="104" Height="38" Click="SearchButton_Click" RenderTransformOrigin="0.132,1.774"/>
-        <Button x:Name="ExitButton" Content="Exit" HorizontalAlignment="Left" Margin="636,461,0,0" VerticalAlignment="Top" Width="104" Height="38" Click="Button_Click"/>
+        <Button x:Name="ExitButton" Content="Exit" HorizontalAlignment="Left" Margin="636,461,0,0" VerticalAlignment="Top" Width="104" Height="38" Click="ExitButton_Click"/>
         <TextBox x:Name="nameBox" HorizontalAlignment="Left" Margin="83,307,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="35"/>
         <Label Content="Tên sản phẩm" HorizontalAlignment="Left" Margin="83,272,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.659,0.412"/>
         <TextBox x:Name="weightBox" HorizontalAlignment="Left" Margin="264,307,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="35"/>

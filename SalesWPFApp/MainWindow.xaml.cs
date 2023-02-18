@@ -1,7 +1,9 @@
 ﻿using BusinessObject;
+using BusinessObject.DTO;
 using DataAccess.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,7 +40,7 @@ namespace SalesWPFApp
 
         private List<Product> GetAllProduct()
         {
-            return _productRepository.GetAllProduct();
+            return _productRepository.GetAllProduct();           
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -74,7 +76,7 @@ namespace SalesWPFApp
             return prod;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
@@ -87,7 +89,7 @@ namespace SalesWPFApp
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             Product productSearch = AppendProd();
-            var listProd = _productRepository.SearchProduct(productSearch).Select(x => new
+            var listProd = _productRepository.SearchProduct(productSearch).Select(x => new ProductDTO
             {
                 ID = x.ProductId,
                 Name = x.ProductName,
@@ -109,7 +111,7 @@ namespace SalesWPFApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            dataView.ItemsSource = GetAllProduct().Select(x => new
+            dataView.ItemsSource = GetAllProduct().Select(x => new ProductDTO
             {
                 ID = x.ProductId,
                 Name = x.ProductName,
@@ -128,7 +130,38 @@ namespace SalesWPFApp
             weightBox.Text = "";
             catBox.Text = "";
             unitInStockBox.Text = "";
-            dataView.ItemsSource = GetAllProduct();
+            dataView.ItemsSource = GetAllProduct().Select(x => new ProductDTO
+            {
+                ID = x.ProductId,
+                Name = x.ProductName,
+                Category = x.CategoryId,
+                WeightOfProduct = x.Weight,
+                Price = x.UnitPrice,
+                Instock = x.UnitsInStock
+            }); 
+        }
+
+        private void dataView_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            try
+            {
+                if (dataView.SelectedCells != null && dataView.SelectedCells.Count() > 0)
+                {
+                    var cellInfor = dataView.SelectedCells.Distinct().Last();
+                    var content = (ProductDTO)cellInfor.Item;
+                    IDBox.Text = content.ID.ToString();
+                    nameBox.Text = content.Name;
+                    priceBox.Text = content.Price.ToString();
+                    unitInStockBox.Text = content.Instock.ToString();
+                    weightBox.Text = content.WeightOfProduct.ToString();
+                    catBox.Text = content.Category.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
     }
 }

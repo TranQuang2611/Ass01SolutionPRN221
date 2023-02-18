@@ -17,6 +17,14 @@ namespace BusinessObject
             }
         }
 
+        public int GetLastIdOfProduct()
+        {
+            using (var context = new SaleDbContext())
+            {
+                return context.Products.Last().ProductId;
+            }
+        }
+
         public Product GetProduct(int id)
         {
             using (var context = new SaleDbContext())
@@ -29,7 +37,7 @@ namespace BusinessObject
         {
             Product newProd = new Product
             {
-                ProductId = prod.ProductId,
+                ProductId = prod.ProductId == 0 ? GetLastIdOfProduct() + 1 : prod.ProductId,
                 ProductName= prod.ProductName,
                 CategoryId = prod.CategoryId,
                 Weight = prod.Weight,
