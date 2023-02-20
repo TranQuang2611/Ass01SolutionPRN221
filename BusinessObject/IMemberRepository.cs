@@ -10,5 +10,6 @@ namespace BusinessObject
     public interface IMemberRepository
     {
         List<Member> GetListMembers();
+        bool LoginMember(string email, string password);
     }
 }

@@ -21,23 +21,24 @@ namespace SalesWPFApp
         public App()
         {
             ServiceCollection services = new ServiceCollection();
-            ConfigureServices(services);
+            ConfigService.ConfigureServices(services);
             serviceProvider = services.BuildServiceProvider();
         }
 
-        private void ConfigureServices(ServiceCollection services)
-        {
-            services.AddSingleton(typeof(IOrderDetailRepository), typeof(OrderDetailRepository));
-            services.AddSingleton(typeof(IMemberRepository), typeof(MemberRepository));
-            services.AddSingleton(typeof(IOrderRepository), typeof(OrderRepository));
-            services.AddSingleton(typeof(IProductRepository), typeof(ProductRepository));
-            services.AddSingleton<MainWindow>();          
-        }
+        //private void ConfigureServices(ServiceCollection services)
+        //{
+        //    services.AddSingleton(typeof(IOrderDetailRepository), typeof(OrderDetailRepository));
+        //    services.AddSingleton(typeof(IMemberRepository), typeof(MemberRepository));
+        //    services.AddSingleton(typeof(IOrderRepository), typeof(OrderRepository));
+        //    services.AddSingleton(typeof(IProductRepository), typeof(ProductRepository));
+        //    services.AddSingleton<Login>();
+        //    services.AddSingleton<ProductManagement>();
+        //}
 
         private void OnStartup(object sender, StartupEventArgs e)
         {
-            var mainWindow = serviceProvider.GetService<MainWindow>();
-            mainWindow.Show();
+            var loginWindow = serviceProvider.GetService<Login>();
+            loginWindow.Show();
         }
 
     }

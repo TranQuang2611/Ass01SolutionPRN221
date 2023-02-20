@@ -22,20 +22,35 @@ namespace SalesWPFApp
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ProductManagement : Window
     {
         public IOrderDetailRepository _orderDetailRepository;
         public IOrderRepository _orderRepository;
         public IProductRepository _productRepository;
         public IMemberRepository _memberRepository;
 
-        public MainWindow(IOrderDetailRepository orderDetailRepository, IOrderRepository orderRepository, IProductRepository productRepository, IMemberRepository memberRepository)
+        public bool isAdmin()
+        {
+            var isAdmin =  Application.Current.Properties["admin"];
+            if (isAdmin != null)
+            {
+                return true;
+            }
+            return false;
+        }
+        public ProductManagement(IOrderDetailRepository orderDetailRepository, IOrderRepository orderRepository, IProductRepository productRepository, IMemberRepository memberRepository)
         {
             _orderDetailRepository = orderDetailRepository;
             _orderRepository = orderRepository;
             _productRepository = productRepository;
-            _memberRepository = memberRepository;
+            _memberRepository = memberRepository;         
             InitializeComponent();
+            if (!isAdmin())
+            {
+                DeleteButton.Visibility = Visibility.Hidden;
+                EditButton.Visibility = Visibility.Hidden;
+                AddButton.Visibility = Visibility.Hidden;
+            }
         }
 
         private List<Product> GetAllProduct()
@@ -61,6 +76,7 @@ namespace SalesWPFApp
             else
             {
                 _productRepository.InsertProduct(newProd);
+                
             }
         }
 
@@ -83,7 +99,21 @@ namespace SalesWPFApp
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (dataView.SelectedCells != null && dataView.SelectedCells.Count() > 0)
+            {
+                var cellInfor = dataView.SelectedCells.Distinct().Last();
+                var content = (ProductDTO)cellInfor.Item;               
+                MessageBoxResult result = MessageBox.Show("Do you wamt to delete this product ?", "Warning", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+                    _productRepository.DeleteProduct(content.ID);
+                }
+                ResetWindow();
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn sản phẩm để xóa");
+            }
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
@@ -122,7 +152,7 @@ namespace SalesWPFApp
             });
         }
 
-        private void Reset_Click(object sender, RoutedEventArgs e)
+        private void ResetWindow()
         {
             IDBox.Text = "";
             nameBox.Text = "";
@@ -138,7 +168,12 @@ namespace SalesWPFApp
                 WeightOfProduct = x.Weight,
                 Price = x.UnitPrice,
                 Instock = x.UnitsInStock
-            }); 
+            });
+        }
+
+        private void Reset_Click(object sender, RoutedEventArgs e)
+        {
+            ResetWindow();
         }
 
         private void dataView_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
@@ -162,6 +197,11 @@ namespace SalesWPFApp
                 MessageBox.Show(ex.Message);
             }
             
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

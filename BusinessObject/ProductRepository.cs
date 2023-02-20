@@ -9,6 +9,16 @@ namespace BusinessObject
 {
     public class ProductRepository : IProductRepository
     {
+        public void DeleteProduct(int id)
+        {
+            using (var context = new SaleDbContext())
+            {
+                Product product = GetProduct(id);
+                context.Products.Remove(product);
+                context.SaveChanges();
+            }
+        }
+
         public List<Product> GetAllProduct()
         {
             using (var context = new SaleDbContext())
@@ -59,7 +69,7 @@ namespace BusinessObject
                 products = context.Products.ToList();
                 if (prod.ProductId != 0) products = products.Where(x => x.ProductId== prod.ProductId).ToList();
                 if (prod.CategoryId != 0) products = products.Where(x => x.CategoryId == prod.CategoryId).ToList();
-                if (!string.IsNullOrEmpty(prod.ProductName)) products = products.Where(x => x.ProductName.Contains(prod.ProductName)).ToList();
+                if (!string.IsNullOrEmpty(prod.ProductName)) products = products.Where(x => x.ProductName.ToLower().Contains(prod.ProductName.ToLower())).ToList();
                 if(!string.IsNullOrEmpty(prod.Weight)) products = products.Where(x => x.Weight.Contains(prod.Weight)).ToList();
                 if(prod.UnitPrice != 0) products = products.Where(x => x.UnitPrice >= prod.UnitPrice).ToList();
                 if (prod.UnitsInStock != 0) products = products.Where(x => x.UnitsInStock >= prod.UnitsInStock).ToList();

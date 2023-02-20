@@ -18,5 +18,18 @@ namespace BusinessObject
                 return context.Members.ToList();
             }
         }
+
+        public bool LoginMember(string email, string password)
+        {
+            using (var context = new SaleDbContext())
+            {
+                Member member= context.Members.FirstOrDefault(x => x.Email== email && x.Password == password);
+                if(member!=null)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
     }
 }

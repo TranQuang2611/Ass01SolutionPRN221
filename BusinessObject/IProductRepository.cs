@@ -14,5 +14,7 @@ namespace BusinessObject
         List<Product> SearchProduct(Product prod);
         void InsertProduct(Product prod);
         int GetLastIdOfProduct();
+
+        void DeleteProduct(int id);
     }
 }
