@@ -12,6 +12,21 @@ namespace BusinessObject
 {
     public class OrderRepository : IOrderRepository
     {
+        public void DeleteOrder(int orderId)
+        {
+            using (var context = new SaleDbContext())
+            {
+                var orderDetail = context.OrderDetails.Include(x => x.Order).Where(x => x.OrderId == orderId).ToList();
+                var order = context.Orders.FirstOrDefault(x => x.OrderId == orderId);
+                if (order != null)
+                {
+                    context.OrderDetails.RemoveRange(orderDetail);
+                    context.Orders.Remove(order);
+                    context.SaveChanges();
+                }
+            }
+        }
+
         public List<Order> GetAllOrder()
         {
             using (var context = new SaleDbContext())
@@ -45,6 +60,20 @@ namespace BusinessObject
                 if (orderSearch.ID != 0) orders = orders.Where(x => x.OrderId == orderSearch.ID).ToList();
                 if(string.IsNullOrEmpty(orderSearch.MemberName)) orders = orders.Where(x => x.Member.Email.ToLower().Contains(orderSearch.MemberName.ToLower())).ToList();
                 if(orderSearch.Freight!=0) orders = orders.Where(x => x.Freight >= orderSearch.Freight).ToList();
+                return orders;
+            }
+        }
+
+        public List<Order> SearchOrder(OrderSearch orderSearch)
+        {
+            List<Order> orders = new List<Order>();
+            using (var context = new SaleDbContext())
+            {
+                orders = context.Orders.Include(x => x.Member).Include(x => x.OrderDetails).ToList();
+                if (orderSearch.OrderId != 0) orders = orders.Where(x => x.OrderId == orderSearch.OrderId).ToList();
+                if (!string.IsNullOrEmpty(orderSearch.Email)) orders = orders.Where(x => x.Member.Email.ToLower().Contains(orderSearch.Email.ToLower())).ToList();
+                if (orderSearch.Freight != 0) orders = orders.Where(x => x.Freight >= orderSearch.Freight).ToList();
+                orders = orders.Where(x => x.OrderDate <= orderSearch.OrderTo && x.OrderDate >= orderSearch.OrderFrom).ToList();
                 return orders;
             }
         }

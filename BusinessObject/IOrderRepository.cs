@@ -16,5 +16,9 @@ namespace BusinessObject
         List<Order> GetAllOrder();
 
         List<Order> SearchOrder(OrderDTO orderSearch);
+
+        List<Order> SearchOrder(OrderSearch orderSearch);
+
+        void DeleteOrder(int orderId);
     }
 }
