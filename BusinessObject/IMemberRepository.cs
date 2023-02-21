@@ -11,5 +11,7 @@ namespace BusinessObject
     {
         List<Member> GetListMembers();
         bool LoginMember(string email, string password);
+
+        Member GetMember(string email, string password);
     }
 }

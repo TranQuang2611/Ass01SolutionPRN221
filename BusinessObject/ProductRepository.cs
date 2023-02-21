@@ -76,5 +76,14 @@ namespace BusinessObject
                 return products;
             }
         }
+
+        public void UpdateProduct(Product prod)
+        {
+            using (var context = new SaleDbContext())
+            {
+                context.Products.Update(prod);
+                context.SaveChanges();
+            }
+        }
     }
 }

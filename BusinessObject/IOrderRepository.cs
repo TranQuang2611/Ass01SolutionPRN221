@@ -1,4 +1,5 @@
-﻿using DataAccess.Models;
+﻿using BusinessObject.DTO;
+using DataAccess.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,9 @@ namespace BusinessObject
     {
         List<Order> ListOrderByMemberId(int memberId);
         List<Order> ListOrderByMemberName(string memberName);
+
+        List<Order> GetAllOrder();
+
+        List<Order> SearchOrder(OrderDTO orderSearch);
     }
 }

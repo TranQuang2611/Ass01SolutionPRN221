@@ -18,6 +18,8 @@ namespace SalesWPFApp
             services.AddSingleton(typeof(IProductRepository), typeof(ProductRepository));
             services.AddSingleton<Login>();
             services.AddSingleton<ProductManagement>();
+            services.AddSingleton<MemberManagement>();
+            services.AddSingleton<OrderManagement>();
         }
     }
 }

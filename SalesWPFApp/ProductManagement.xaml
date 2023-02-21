@@ -10,7 +10,7 @@
         <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" Margin="83,65,83,437" Name="dataView" SelectedCellsChanged="dataView_SelectedCellsChanged"/>
         <Button x:Name="AddButton" Content="Add" HorizontalAlignment="Left" Margin="61,456,0,0" VerticalAlignment="Top" Width="105" Height="38" Click="AddButton_Click"/>
         <Label Content="Danh sách sản phẩm" HorizontalAlignment="Center" Margin="0,23,0,0" VerticalAlignment="Top" Width="410" Background="#FFE25A5A" FontSize="20" HorizontalContentAlignment="Center"/>
-        <Button x:Name="DeleteButton" Content="Delete" HorizontalAlignment="Left" Margin="635,456,0,0" VerticalAlignment="Top" Width="105" Height="38" Click="DeleteButton_Click"/>
+        <Button x:Name="DeleteButton" Content="Delete" HorizontalAlignment="Right" Margin="0,456,60,0" VerticalAlignment="Top" Width="105" Height="38" Click="DeleteButton_Click"/>
         <Button x:Name="SearchButton" Content="Search" HorizontalAlignment="Left" Margin="62,527,0,0" VerticalAlignment="Top" Width="104" Height="38" Click="SearchButton_Click" RenderTransformOrigin="0.132,1.774"/>
         <Button x:Name="ExitButton" Content="Exit" HorizontalAlignment="Right" Margin="0,522,61,0" VerticalAlignment="Top" Width="104" Height="38" Click="ExitButton_Click"/>
         <TextBox x:Name="nameBox" HorizontalAlignment="Left" Margin="83,307,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="35"/>
@@ -27,6 +27,7 @@
         <TextBox x:Name="catBox" HorizontalAlignment="Left" Margin="83,405,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="35"/>
         <Label x:Name="instockBox" Content="InStock" HorizontalAlignment="Left" Margin="264,364,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.659,0.412"/>
         <Button x:Name="EditButton" Content="Edit" HorizontalAlignment="Center" Margin="0,456,0,0" VerticalAlignment="Top" Width="105" Height="38" Click="EditButton_Click"/>
+        <Button x:Name="OrderButton" Content="Manage Order" HorizontalAlignment="Right" Margin="0,399,61,0" VerticalAlignment="Top" Width="105" Height="38" Click="OrderButton_Click"/>
 
     </Grid>
 </Window>

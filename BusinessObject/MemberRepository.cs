@@ -19,6 +19,14 @@ namespace BusinessObject
             }
         }
 
+        public Member GetMember(string email, string password)
+        {
+            using (var context = new SaleDbContext())
+            {
+                return context.Members.FirstOrDefault(x => x.Email== email && x.Password == password);
+            }
+        }
+
         public bool LoginMember(string email, string password)
         {
             using (var context = new SaleDbContext())

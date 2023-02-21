@@ -57,9 +57,10 @@ namespace SalesWPFApp
                 }
                 else
                 {
-                    bool validMember = _memberRepository.LoginMember(emailBox.Text, passBox.Text);
-                    if (validMember)
+                    var validMember = _memberRepository.GetMember(emailBox.Text, passBox.Text);
+                    if (validMember!=null)
                     {
+                        Application.Current.Resources["logged"] = validMember;
                         this.Hide();
                         RedirectWindow();
                         var prodWindow = serviceProvider.GetService<ProductManagement>();

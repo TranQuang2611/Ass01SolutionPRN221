@@ -1,4 +1,5 @@
 ﻿using DataAccess.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace BusinessObject
         {
             using (var context = new SaleDbContext())
             {
-                return context.OrderDetails.Where(x => x.OrderId == orderId).ToList();
+                return context.OrderDetails.Include(x => x.Order).Include(x => x.Product).Where(x => x.OrderId == orderId).ToList();
             }
         }
     }

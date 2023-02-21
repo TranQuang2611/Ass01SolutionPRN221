@@ -16,5 +16,7 @@ namespace BusinessObject
         int GetLastIdOfProduct();
 
         void DeleteProduct(int id);
+
+        void UpdateProduct(Product prod);   
     }
 }

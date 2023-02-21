@@ -1,6 +1,7 @@
 ﻿using BusinessObject;
 using BusinessObject.DTO;
 using DataAccess.Models;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -24,12 +25,13 @@ namespace SalesWPFApp
     /// </summary>
     public partial class ProductManagement : Window
     {
+        private ServiceProvider serviceProvider;
         public IOrderDetailRepository _orderDetailRepository;
         public IOrderRepository _orderRepository;
         public IProductRepository _productRepository;
         public IMemberRepository _memberRepository;
 
-        public bool isAdmin()
+        private bool isAdmin()
         {
             var isAdmin =  Application.Current.Properties["admin"];
             if (isAdmin != null)
@@ -37,6 +39,14 @@ namespace SalesWPFApp
                 return true;
             }
             return false;
+        }
+
+        private void RedirectWindow()
+        {
+
+            ServiceCollection services = new ServiceCollection();
+            ConfigService.ConfigureServices(services);
+            serviceProvider = services.BuildServiceProvider();
         }
         public ProductManagement(IOrderDetailRepository orderDetailRepository, IOrderRepository orderRepository, IProductRepository productRepository, IMemberRepository memberRepository)
         {
@@ -76,7 +86,8 @@ namespace SalesWPFApp
             else
             {
                 _productRepository.InsertProduct(newProd);
-                
+                MessageBox.Show("Thêm sản phẩm thành công");
+                ResetWindow();
             }
         }
 
@@ -201,7 +212,36 @@ namespace SalesWPFApp
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (dataView.SelectedCells != null && dataView.SelectedCells.Count() > 0)
+                {
+                    var cellInfor = dataView.SelectedCells.Distinct().Last();
+                    var content = (ProductDTO)cellInfor.Item;
+                    Product prodUpdate = AppendProd();
+                    prodUpdate.ProductId = prodUpdate.ProductId;
+                    _productRepository.UpdateProduct(prodUpdate);
+                    MessageBox.Show("Sửa thành công sản phẩm có ID = " + prodUpdate.ProductId);
+                    ResetWindow();
+                }
+                else
+                {
+                    MessageBox.Show("Vui lòng chọn sản phẩm để sửa");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
+        private void OrderButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            RedirectWindow();
+            var orderWindow = serviceProvider.GetService<OrderManagement>();
+            orderWindow.Show();
+            this.Close();
         }
     }
 }
